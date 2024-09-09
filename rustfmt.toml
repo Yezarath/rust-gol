@@ -1,0 +1,6 @@
+# rustfmt.toml
+
+hard_tabs = true
+match_arm_leading_pipes = "Always"
+max_width = 80
+use_small_heuristics = "Max"
