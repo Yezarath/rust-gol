@@ -5,8 +5,8 @@ A terminal implementation of **Conway's Game of Life** written in Rust.
 The board is stored as a *sparse hash map* of live cells, so the universe is
 effectively unbounded — there is no fixed grid and no wrapping. The simulation
 runs on its own thread while a second thread renders the visible window to the
-terminal with ANSI colors and Unicode borders, and a third thread listens for
-keyboard input.
+terminal with ANSI colors and Unicode borders. A third thread exists as a
+placeholder for keyboard input, which is not wired up yet.
 
 ```
 ╔════════════════════════════════════════════════════════════╗
@@ -32,7 +32,8 @@ Cycle count       : 42
 - **Warm-up cycles** — optionally pre-simulate `N` generations behind an
   `indicatif` progress bar before the animation starts.
 - **Adjustable speed** — frame interval in milliseconds.
-- **Raw-mode input** — press `q` to quit; the terminal is restored on panic.
+- **Quit with `Ctrl+C`** — there is no in-app key handling yet, so a signal is
+  how you stop the program.
 - **Resize aware** — the view width follows the terminal width.
 
 ## Requirements
@@ -79,9 +80,15 @@ cargo run -- -m map.gol -c 500 -s 32
 
 ### Controls
 
-| Key | Action |
-| --- | ------ |
-| `q` | Quit   |
+There is no in-app key handling yet — the event thread is an empty loop, so
+`q` (and `Q`) do nothing.
+
+| Key      | Action                                  |
+| -------- | --------------------------------------- |
+| `Ctrl+C` | Quit (delivers `SIGINT` to the process) |
+
+In-app keyboard controls (`q` to quit, pause/resume, speed, panning, editing
+cells) are planned — see the [roadmap](#roadmap--known-limitations).
 
 ## Map file format
 
@@ -142,13 +149,14 @@ starting generation.
 ### Runtime (`src/main.rs`)
 
 - `clap` parses the CLI, then `termsize` supplies the initial window size.
-- The terminal is switched to raw mode; a custom panic hook restores it.
+- Raw mode is not enabled: the terminal stays in cooked mode, so `Ctrl+C`
+  keeps working.
 - The board and display are wrapped in `Arc<Mutex<…>>` and shared by three
   threads:
   1. **simulation** — runs the warm-up cycles, then steps the board forever;
   2. **display** — paces redraws, re-reads the terminal size every 60 ms, and
      re-renders the board;
-  3. **events** — reads one byte at a time from stdin and stops on `q`.
+  3. **events** — an empty placeholder loop; it does not read input yet.
 - `to_sleep()` / `repeat_fn_ms()` implement frame pacing so rendering and
   simulation are roughly limited to the requested `--speed`.
 
@@ -163,8 +171,9 @@ The TODO block at the end of `src/main.rs` lists the intended next steps:
 - [ ] Introduce a message channel between threads and wrap each thread in a
       constructor / `run` / `send` API (messages: `pause`, `quit`).
 
-Because the simulation loop currently runs forever, a clean shutdown depends on
-that messaging layer; until it exists, quitting is the main rough edge.
+Because the simulation and display loops run forever and no input is read, the
+only way to stop the program is `Ctrl+C`. A clean in-app shutdown depends on the
+messaging layer above.
 
 ## Author
 
