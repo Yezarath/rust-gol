@@ -9,12 +9,12 @@ terminal with ANSI colors and Unicode borders. A third thread exists as a
 placeholder for keyboard input, which is not wired up yet.
 
 ```
-╔════════════════════════════════════════════════════════════╗
+╔═════════════════════════════════════════════════════════════╗
 ║  ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙  ║
 ║  ∙ ∙ ∙ ∙ ⏺ ⏺ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ⏺ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙  ║
 ║  ∙ ∙ ∙ ∙ ∙ ⏺ ∙ ∙ ∙ ∙ ∙ ∙ ⏺ ⏺ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙  ║
 ║  ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙ ∙  ║
-╚════════════════════════════════════════════════════════════╝
+╚═════════════════════════════════════════════════════════════╝
 Live cells  (view): 6
 Live cells (total): 15
 Cycle count       : 42
@@ -61,9 +61,9 @@ cargo run -- [OPTIONS]
 | ----------------- | ----- | ---------- | -------------------------------------------- |
 | `--map <FILE>`    | `-m`  | `map.gol`  | Map file to load.                            |
 | `--speed <MS>`    | `-s`  | `16`       | Simulation/render interval in milliseconds.  |
-| `--cycle <N>`     | `-c`  | `0`        | Cycles to simulate before the animation.      |
-| `--help`          | `-h`  |            | Print help.                                   |
-| `--version`       | `-V`  |            | Print version.                                |
+| `--cycle <N>`     | `-c`  | `0`        | Cycles to simulate before the animation.     |
+| `--help`          | `-h`  |            | Print help.                                  |
+| `--version`       | `-V`  |            | Print version.                               |
 
 Examples:
 
@@ -108,8 +108,8 @@ starting generation.
 
 | File          | Cells    | Notes                                                        |
 | ------------- | -------- | ------------------------------------------------------------ |
-| `map.gol`     | 108      | Small scattered soup; the default map.                        |
-| `map2.gol`    | 15       | Two tiny patterns.                                            |
+| `map.gol`     | 108      | Small scattered soup; the default map.                       |
+| `map2.gol`    | 15       | Two tiny patterns.                                           |
 | `map_tmp.gol` | ~1.77 M  | Very large generated soup (~15 MB). Heavy to parse and step. |
 
 ## Project layout
